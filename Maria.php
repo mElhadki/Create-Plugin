@@ -31,12 +31,39 @@ function my_admin_menu () {
 
 
 function Description_admin_page () {
+  require_once(ABSPATH . 'wp-config.php');
+    $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD);
+    mysqli_select_db($connection,DB_NAME);
+
+  $sql= "SELECT * FROM Maria"; 
+  $result = mysqli_query($connection, $sql);
+    
   echo '<div class="wrap">
   <h1>Hello!</h1>
   <p>it is a plugin with two submenus. A page for the general description of my plugin.Configuration page an input text field, textarea for the description,
      an option list and a save button
   </p>
-</div>';
+  <h1 style="margin-left:10px; margin-bottom:20px; color:Red;">List of information</h1>
+  <table style="width:80%;"align="center" border="1";>
+  <tr>
+  <td style="height:50px; text-align:center;">Username</td>
+  <td style="height:50px; text-align:center;">Description</td>
+  <td style="height:50px; text-align:center;">Option</td>';
+  foreach($result as $row){   
+        
+    ?>
+    <tr>
+        
+        <td style="text-align:center;"><?php echo $row["username"] ;?></td>
+        <td style="text-align:center;"><?php echo $row["descriptions"] ;?></td>
+        <td style="text-align:center;"><?php echo $row["Options"] ;?></td>
+    </tr>
+ 
+    <?php
+}
+echo"
+  </table>
+</div>";
 }
 
 // mt_settings_page() displays the page content for the Test Settings submenu

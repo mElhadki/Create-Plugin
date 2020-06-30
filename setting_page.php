@@ -20,6 +20,7 @@ function insert(){
     require_once(ABSPATH . 'wp-config.php');
     $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD);
     mysqli_select_db($connection,DB_NAME);
+    
     $username= $_POST['username'];  
     $descriptions = $_POST['descriptions'];
     $Options= $_POST['Options'];

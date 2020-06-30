@@ -1,35 +1,48 @@
 
 <?php
-if(isset($_POST['wphw_submit'])){
-    wphw_opt();
-    insert();
-}
+
+
 
 function wphw_opt(){
     
-    $link = mysqli_connect("localhost", "root", "", "woo");
+    require_once(ABSPATH . 'wp-config.php');
+    $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD);
+    mysqli_select_db($connection,DB_NAME);
+    
     $sql = "CREATE TABLE Maria(id int NOT NULL PRIMARY KEY AUTO_INCREMENT, username varchar(255) NOT NULL, descriptions varchar(255) NOT NULL, Options varchar(255) NOT NULL)";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($connection, $sql);
     return $result;
 
 }
 
 function insert(){
 
-    $link = mysqli_connect("localhost", "root", "", "woo");
+    require_once(ABSPATH . 'wp-config.php');
+    $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD);
+    mysqli_select_db($connection,DB_NAME);
     $username= $_POST['username'];  
     $descriptions = $_POST['descriptions'];
     $Options= $_POST['Options'];
 
     if(empty($_POST['username']) || empty($_POST['descriptions']) || empty($_POST['Options'] ))
+        
     {
+        echo '<div id="message" class="error">
+                <p>Content not added</p>
+              </div>';
+        exit();
          
     }
     else
     {
          $query="insert INTO Maria (username,descriptions,Options)". "VALUES ('$username', '$descriptions', '$Options')";
-         $result=mysqli_query($link,$query);
+         $result=mysqli_query($connection,$query);
     }
+}
+
+if(isset($_POST['wphw_submit'])){
+    wphw_opt();
+    insert();
 }
 
 ?>
